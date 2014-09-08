@@ -1,0 +1,21 @@
+GuestBookService.java
+
+    List<GuestBookEntity> findAllOrderByAuthor();
+
+GuestBookServiceImpl.java
+
+    @Override public List<GuestBookEntity> findAllOrderByAuthor() {
+        return repository.findAll(new Sort(new Sort.Order(Sort.Direction.ASC, "author")));
+    }
+
+index.html:
+
+    /web/guestbook/sortByAuthor
+
+WebController.java
+
+    @RequestMapping(value = "/web/guestbook/sortByAuthor", method = RequestMethod.GET)
+    public String getAllByAuthorOrderByIdDesc(Model model) {
+        model.addAttribute("gb", guestBookService.findAllOrderByAuthor());
+        return "index";
+    }

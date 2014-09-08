@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Atos Spring Demo</title>
+
+    <link th:href="@{/webjars/bootstrap/3.2.0/css/bootstrap.min.css}" rel="stylesheet"/>
+
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Atos Spring Demo</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="/">Menu 1</a></li>
+                <li><a href="/">Menu 2</a></li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</div>
+
+<div class="container" style="margin-top:80px;">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="well well-sm">
+                <form class="form-horizontal" th:action="@{/web/guestbook/add}" method="post">
+                    <fieldset>
+                        <legend class="text-center">Guestbook</legend>
+                        <div class="form-inline">
+                            <input id="author" name="author" type="text" placeholder="Your name"
+                                   class="form-control"/>
+                            <input class="form-control" id="content" name="content" type="text"
+                                   placeholder="Please enter your message here..."/>
+                            <button type="submit" class="btn btn-primary">Submit form</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>Date</th>
+            <th>
+                <a th:href="@{/}">Author</a>
+            </th>
+            <th>Content</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="row : ${gb}">
+            <td th:text="${row.id}">1</td>
+            <td th:text="${#calendars.format(row.insertDate,'yyyy-MM-DD HH:mm')}">2014-01-01 00:00</td>
+            <td>
+                <a th:text="${row.author}" th:href="@{/web/guestbook/author/} + ${row.author}">Author</a>
+            </td>
+            <td th:text="${row.content}">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                sed do eiusmod tempor incididunt ut labore et dolore
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.2.0/js/bootstrap.min.js}"></script>
+</body>
+</html>
+

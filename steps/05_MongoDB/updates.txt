@@ -1,0 +1,19 @@
+pom.xml:
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
+
+GuestBookDao.java:
+
+    public interface GuestBookDao extends MongoRepository<GuestBookEntity, Long> {
+
+GuestBookEntity.java:
+
+    import org.springframework.data.annotation.Id;
+    //Entity -> Document
+
+Application.java
+
+    @EnableAutoConfiguration(exclude = {JpaRepositoriesAutoConfiguration.class})

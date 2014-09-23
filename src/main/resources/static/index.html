@@ -82,7 +82,7 @@
                 tbl_row += "<td>" + row[0].id + "</td>";
                 var date = new Date(row[0].insertDate);
                 tbl_row += "<td>" + date.toISOString() + "</td>";
-                tbl_row += "<td><a id='authorLink' href='/guestbook/author/" + row[0].author + "'>" + row[0].author + "</a></td>";
+                tbl_row += "<td><a id='authorLink' href='/guestbook/author/" + row[0].author + "'>" + row[0].author.name + "</a></td>";
                 tbl_row += "<td>" + row[0].content + "</td>";
                 tbl_body += "<tr>"+tbl_row+"</tr>";
             });

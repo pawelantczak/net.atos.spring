@@ -26,7 +26,7 @@ public class Application extends Neo4jConfiguration {
 
     @Bean
     public GraphDatabaseService graphDatabaseService() {
-        return new SpringRestGraphDatabase("http://localhost:7474/db/data/");
+        return new SpringRestGraphDatabase("http://localhost:7474/db/data/","user","user");
     }
 
 }

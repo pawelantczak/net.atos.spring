@@ -1,5 +1,6 @@
 package net.atos.spring.guestbook;
 
+import net.atos.spring.guestbook.entities.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -11,15 +12,15 @@ public class GuestBookServiceImpl implements GuestBookService {
     @Autowired
     GuestBookDao repository;
 
-    @Override public GuestBookEntity save(GuestBookEntity guestBookEntity) {
+    @Override public Entry save(Entry guestBookEntity) {
         return repository.save(guestBookEntity);
     }
 
-    @Override public List<GuestBookEntity> findAll() {
+    @Override public List<Entry> findAll() {
         return repository.findAll();
     }
 
-    @Override public List<GuestBookEntity> findAllByAuthor(String author) {
+    @Override public List<Entry> findAllByAuthor(String author) {
         return repository.findAllByAuthor(author);
     }
 }

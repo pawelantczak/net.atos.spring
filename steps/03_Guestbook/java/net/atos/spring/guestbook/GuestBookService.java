@@ -1,12 +1,14 @@
 package net.atos.spring.guestbook;
 
+import net.atos.spring.guestbook.entities.Entry;
+
 import java.util.List;
 
 public interface GuestBookService {
 
-    GuestBookEntity save(GuestBookEntity guestBookEntity);
+    Entry save(Entry guestBookEntity);
 
-    List<GuestBookEntity> findAll();
+    List<Entry> findAll();
 
-    List<GuestBookEntity> findAllByAuthor(String author);
+    List<Entry> findAllByAuthor(String author);
 }

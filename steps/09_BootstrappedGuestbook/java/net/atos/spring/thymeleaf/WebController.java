@@ -1,6 +1,6 @@
 package net.atos.spring.thymeleaf;
 
-import net.atos.spring.guestbook.GuestBookEntity;
+import net.atos.spring.guestbook.entities.Entry;
 import net.atos.spring.guestbook.GuestBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ public class WebController {
     @RequestMapping(value = "/web/guestbook/add", method = RequestMethod.POST)
     public String add(@RequestParam String author,
         @RequestParam String content, Model model) {
-        guestBookService.save(new GuestBookEntity(author, content));
+        guestBookService.save(new Entry(author, content));
         model.addAttribute("gb", guestBookService.findAll());
         return "index";
     }

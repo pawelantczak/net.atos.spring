@@ -1,17 +1,17 @@
 package net.atos.spring.guestbook.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.Indexed;
+import org.springframework.data.neo4j.annotation.NodeEntity;
 
-@Entity
+
+@NodeEntity
 public class Author {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GraphId
     private Long id;
 
+    @Indexed(unique = true)
     private String name;
 
     public Author() {

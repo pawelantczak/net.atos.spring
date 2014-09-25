@@ -1,0 +1,33 @@
+pom.xml:
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-neo4j</artifactId>
+            <version>3.2.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-neo4j-rest</artifactId>
+            <version>3.2.0.RELEASE</version>
+        </dependency>
+
+    <repositories>
+        <repository>
+            <id>antczak-public</id>
+            <url>http://nexus.antczak.org/content/groups/public/</url>
+        </repository>
+    </repositories>
+
+Dao:
+
+    public interface AuthorDao extends GraphRepository<Author> {
+    public interface EntryDao extends GraphRepository<Entry> {
+
+Entity:
+
+    import org.springframework.data.annotation.Id;
+    //Entity -> NodeEntity
+
+Application.java
+
+    @EnableAutoConfiguration(exclude = {JpaRepositoriesAutoConfiguration.class})

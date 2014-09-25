@@ -1,17 +1,21 @@
 package net.atos.spring.guestbook.entities;
 
-import javax.persistence.*;
+import org.neo4j.graphdb.Direction;
+import org.springframework.data.neo4j.annotation.Fetch;
+import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
+
 import java.util.Date;
 
-@Entity
+@NodeEntity
 public class Entry {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GraphId
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "idAuthor")
+    @Fetch
+    @RelatedTo(type = "AUTHOR", direction = Direction.INCOMING)
     private Author author;
 
     private String content;

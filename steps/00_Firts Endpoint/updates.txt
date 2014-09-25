@@ -1,0 +1,8 @@
+Application.java
+
+    @Controller
+
+    @RequestMapping("/greeting")
+    public @ResponseBody String greeting(@RequestParam(value = "name") String name) {
+        return "Hello, " + name + "!";
+    }

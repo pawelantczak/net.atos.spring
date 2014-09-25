@@ -1,7 +1,7 @@
 package net.atos.spring.thymeleaf;
 
 import net.atos.spring.guestbook.entities.Entry;
-import net.atos.spring.guestbook.GuestBookService;
+import net.atos.spring.guestbook.services.GuestBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,17 +1,21 @@
 package net.atos.spring.guestbook.entities;
 
-import javax.persistence.*;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.Date;
 
-@Entity
+@Document
 public class Entry {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private ObjectId id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "idAuthor")
+    //@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //@JoinColumn(name = "idAuthor")
+    @DBRef
     private Author author;
 
     private String content;
@@ -27,11 +31,11 @@ public class Entry {
         this.insertDate = new Date();
     }
 
-    public Long getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 

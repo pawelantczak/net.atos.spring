@@ -17,8 +17,8 @@ public class GuestBookServiceImpl implements GuestBookService {
     @Autowired
     AuthorDao authorRepository;
 
-    @Override public Entry saveEntry(Entry guestBookEntity) {
-        return entriesRepository.save(guestBookEntity);
+    @Override public Entry saveEntry(Entry entry) {
+        return entriesRepository.save(entry);
     }
 
     @Override public List<Entry> findAllEntries() {

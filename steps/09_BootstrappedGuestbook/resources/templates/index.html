@@ -71,7 +71,7 @@
             <td th:text="${row.id}">1</td>
             <td th:text="${#calendars.format(row.insertDate,'yyyy-MM-DD HH:mm')}">2014-01-01 00:00</td>
             <td>
-                <a th:text="${row.author}" th:href="@{/web/guestbook/author/} + ${row.author}">Author</a>
+                <a th:text="${row.author.name}" th:href="@{/web/guestbook/author/} + ${row.author.name}">Author</a>
             </td>
             <td th:text="${row.content}">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                 sed do eiusmod tempor incididunt ut labore et dolore

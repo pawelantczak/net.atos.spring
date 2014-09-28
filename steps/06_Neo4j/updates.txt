@@ -1,4 +1,4 @@
-pom.xml:
+pom.xml
 
         <dependency>
             <groupId>org.springframework.data</groupId>
@@ -18,16 +18,27 @@ pom.xml:
         </repository>
     </repositories>
 
-Dao:
+repositories
 
-    public interface AuthorDao extends GraphRepository<Author> {
-    public interface EntryDao extends GraphRepository<Entry> {
+    MongoRepository -> GraphRepository
 
-Entity:
+entities
 
-    import org.springframework.data.annotation.Id;
-    //Entity -> NodeEntity
+    Document -> NodeEntity
+    Id -> GraphId
+    DBRef -> Fetch RelatedTo(type = "AUTHOR", direction = Direction.INCOMING)
+    ObjectId -> Long
 
 Application.java
 
-    @EnableAutoConfiguration(exclude = {JpaRepositoriesAutoConfiguration.class})
+    EnableNeo4jRepositories
+
+    public class Application extends Neo4jConfiguration {
+        public Application() {
+            setBasePackage("net.atos");
+        }
+
+    @Bean
+    public GraphDatabaseService graphDatabaseService() {
+        return new SpringRestGraphDatabase("http://localhost:7474/db/data/");
+    }

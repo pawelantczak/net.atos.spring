@@ -18,21 +18,21 @@ public class WebController {
 
     @RequestMapping(value = "/web/guestbook/author/{author}", method = RequestMethod.GET)
     public String getAllByAuthor(@PathVariable String author, Model model) {
-        model.addAttribute("gb", guestBookService.findAllByAuthor(author));
+        model.addAttribute("gb", guestBookService.findAllEntriesByAuthor(author));
         return "index";
     }
 
     @RequestMapping(value = "/web/guestbook/add", method = RequestMethod.POST)
     public String add(@RequestParam String author,
-        @RequestParam String content, Model model) {
-        guestBookService.save(new Entry(author, content));
-        model.addAttribute("gb", guestBookService.findAll());
+                      @RequestParam String content, Model model) {
+        guestBookService.saveEntry(new Entry(author, content));
+        model.addAttribute("gb", guestBookService.findAllEntries());
         return "index";
     }
 
     @RequestMapping("/")
     public String index(Model model) {
-        model.addAttribute("gb", guestBookService.findAll());
+        model.addAttribute("gb", guestBookService.findAllEntries());
         return "index";
     }
 

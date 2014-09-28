@@ -14,6 +14,7 @@ entities
     import org.springframework.data.annotation.Id;
     Entity -> Document
     ManyToOne -> DBRef
+    Long -> ObjectId
 
 Application.java
 

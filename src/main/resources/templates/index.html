@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Atos Spring Demo</title>
+
+    <link href="/webjars/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
+
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Atos Spring Demo</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="/">Menu 1</a></li>
+                <li><a href="/">Menu 2</a></li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</div>
+
+<div class="container" style="margin-top:80px;">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="well well-sm">
+                <form class="form-horizontal" action="" method="post">
+                    <fieldset>
+                        <legend class="text-center">Guestbook</legend>
+                        <div class="form-inline">
+                            <input id="author" name="author" type="text" placeholder="Your name"
+                                   class="form-control"/>
+                            <input class="form-control" id="content" name="content" type="text"
+                                   placeholder="Please enter your message here..."/>
+                            <button id="send" type="button" class="btn btn-primary">Submit form</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <table id="table" class="table table-striped">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>Date</th>
+            <th>Author</th>
+            <th>Content</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<script src="/webjars/jquery/2.1.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script>
+    // get data
+    function getData(url) {
+        $.getJSON(url, function(data) {
+            var tbl_body = "";
+           $.each(data, function() {
+                var tbl_row = "";
+                var row = $(this);
+                alert(row);
+                tbl_row += "<td>" + row[0].id + "</td>";
+                var date = new Date(row[0].insertDate);
+                tbl_row += "<td>" + date.toISOString() + "</td>";
+                tbl_row += '<td><a id="authorLink" href="/guestbook/author/' + row[0].author.name + '">' + row[0].author.name + '</a></td>';
+                tbl_row += "<td>" + row[0].content + "</td>";
+                tbl_body += "<tr>"+tbl_row+"</tr>";
+            });
+            $("#table tbody").html(tbl_body);
+        });
+    }
+
+    // get by author
+    $(document).on("click", "#authorLink", function(ev) {
+        getData($(this).attr("href"));
+        ev.preventDefault();
+        ev.stopPropagation();
+    });
+
+    // send new entry
+    $("#send").click(function() {
+        $.post("/guestbook/add", $("form").serialize() )
+            .done(function(data) {
+                getData("/guestbook/getall");
+            });
+    });
+
+    // get all
+   getData("/guestbook/getall");
+
+</script>
+</body>
+</html>
+

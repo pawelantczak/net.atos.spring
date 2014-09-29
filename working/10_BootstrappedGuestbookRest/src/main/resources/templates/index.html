@@ -79,7 +79,6 @@
            $.each(data, function() {
                 var tbl_row = "";
                 var row = $(this);
-                alert(row);
                 tbl_row += "<td>" + row[0].id + "</td>";
                 var date = new Date(row[0].insertDate);
                 tbl_row += "<td>" + date.toISOString() + "</td>";

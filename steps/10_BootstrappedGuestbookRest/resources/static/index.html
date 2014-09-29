@@ -48,7 +48,8 @@
                                    class="form-control"/>
                             <input class="form-control" id="content" name="content" type="text"
                                    placeholder="Please enter your message here..."/>
-                            <button id="send" type="button" class="btn btn-primary">Submit form</button>
+                            <button id="send" type="button" class="btn btn-primary">Submit form
+                            </button>
                         </div>
                     </fieldset>
                 </form>
@@ -82,7 +83,7 @@
                 tbl_row += "<td>" + row[0].id + "</td>";
                 var date = new Date(row[0].insertDate);
                 tbl_row += "<td>" + date.toISOString() + "</td>";
-                tbl_row += "<td><a id='authorLink' href='/guestbook/author/" + row[0].author + "'>" + row[0].author + "</a></td>";
+                tbl_row += '<td><a id="authorLink" href="/guestbook/author/' + row[0].author.name + '">' + row[0].author.name + '</a></td>';
                 tbl_row += "<td>" + row[0].content + "</td>";
                 tbl_body += "<tr>"+tbl_row+"</tr>";
             });
@@ -107,6 +108,7 @@
 
     // get all
    getData("/guestbook/getall");
+
 
 </script>
 </body>

@@ -12,4 +12,5 @@ public interface GuestBookService {
 
     List<Entry> findAllEntriesByAuthor(String name);
 
+    List<Entry> findAllEntriesOrderByAuthor();
 }

@@ -36,6 +36,9 @@ public class ApplicationTests {
 
     private MockMvc mockMvc;
 
+    String author = "author name";
+    String content = "Lorem ipsum";
+
     @Before
     public void setup() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
@@ -71,8 +74,7 @@ public class ApplicationTests {
 
     @Test
     public void guestbookTest2AddEntry() throws Exception {
-        String author = "author name";
-        String content = "Lorem ipsum";
+
         this.mockMvc
             .perform(post("/guestbook/add").
                 param("author", author).
@@ -81,5 +83,23 @@ public class ApplicationTests {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.author.name", equalTo(author)))
             .andExpect(jsonPath("$.content", equalTo(content)));
+    }
+
+    @Test
+    public void guestbookTest3Empty() throws Exception {
+        this.mockMvc.perform(get("/guestbook/getall")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$", hasSize(1)));
+    }
+
+    @Test
+    public void guestbookTest4AddIncorrectEntry() throws Exception {
+
+        this.mockMvc
+            .perform(post("/guestbook/add").
+                param("content", content)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().is4xxClientError());
     }
 }

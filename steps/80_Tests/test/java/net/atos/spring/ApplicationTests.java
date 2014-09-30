@@ -1,8 +1,10 @@
 package net.atos.spring;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
@@ -14,13 +16,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsMapContaining.hasKey;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 public class ApplicationTests {
@@ -31,13 +36,16 @@ public class ApplicationTests {
 
     private MockMvc mockMvc;
 
+    String author = "author name";
+    String content = "Lorem ipsum";
+
     @Before
     public void setup() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
     }
 
     @Test
-    public void greetingTest1() throws Exception {
+    public void greetingTest1WithoutName() throws Exception {
         this.mockMvc.perform(get("/greetingjson")
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
@@ -47,12 +55,51 @@ public class ApplicationTests {
     }
 
     @Test
-    public void greetingTest2() throws Exception {
+    public void greetingTest2WithName() throws Exception {
         this.mockMvc.perform(get("/greetingjson?name=Atos")
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id", equalTo(2)))
             .andExpect(jsonPath("$.content", equalTo("Hello, Atos!")))
             .andExpect(jsonPath("$", hasKey("date")));
+    }
+
+    @Test
+    public void guestbookTest1Empty() throws Exception {
+        this.mockMvc.perform(get("/guestbook/getall")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$", hasSize(0)));
+    }
+
+    @Test
+    public void guestbookTest2AddEntry() throws Exception {
+
+        this.mockMvc
+            .perform(post("/guestbook/add").
+                param("author", author).
+                param("content", content)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.author.name", equalTo(author)))
+            .andExpect(jsonPath("$.content", equalTo(content)));
+    }
+
+    @Test
+    public void guestbookTest3Empty() throws Exception {
+        this.mockMvc.perform(get("/guestbook/getall")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$", hasSize(1)));
+    }
+
+    @Test
+    public void guestbookTest4AddIncorrectEntry() throws Exception {
+
+        this.mockMvc
+            .perform(post("/guestbook/add").
+                param("content", content)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().is4xxClientError());
     }
 }

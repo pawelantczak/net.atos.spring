@@ -36,5 +36,9 @@ public class WebController {
         return "index";
     }
 
-
+    @RequestMapping(value = "/web/guestbook/sortByAuthor", method = RequestMethod.GET)
+    public String getAllByAuthorOrderByIdDesc(Model model) {
+        model.addAttribute("gb", guestBookService.findAllEntriesOrderByAuthor());
+        return "index";
+    }
 }

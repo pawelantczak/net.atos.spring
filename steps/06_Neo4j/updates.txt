@@ -1,0 +1,44 @@
+pom.xml
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-neo4j</artifactId>
+            <version>3.2.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-neo4j-rest</artifactId>
+            <version>3.2.0.RELEASE</version>
+        </dependency>
+
+    <repositories>
+        <repository>
+            <id>antczak-public</id>
+            <url>http://nexus.antczak.org/content/groups/public/</url>
+        </repository>
+    </repositories>
+
+repositories
+
+    MongoRepository -> GraphRepository
+
+entities
+
+    Document -> NodeEntity
+    Id -> GraphId
+    DBRef -> Fetch RelatedTo(type = "AUTHOR", direction = Direction.INCOMING)
+    ObjectId -> Long
+
+Application.java
+
+    EnableNeo4jRepositories
+
+    public class Application extends Neo4jConfiguration {
+        public Application() {
+            setBasePackage("net.atos");
+        }
+
+    @Bean
+    public GraphDatabaseService graphDatabaseService() {
+        return new SpringRestGraphDatabase("http://localhost:7474/db/data/");
+    }
